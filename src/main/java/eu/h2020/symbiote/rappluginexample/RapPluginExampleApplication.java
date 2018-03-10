@@ -7,7 +7,6 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.TimeZone;
 
 import org.slf4j.Logger;
@@ -20,8 +19,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import eu.h2020.symbiote.cloud.model.data.InputParameter;
-import eu.h2020.symbiote.cloud.model.data.Result;
 import eu.h2020.symbiote.model.cim.Location;
 import eu.h2020.symbiote.model.cim.Observation;
 import eu.h2020.symbiote.model.cim.ObservationValue;
@@ -55,7 +52,8 @@ public class RapPluginExampleApplication implements CommandLineRunner {
             public List<Observation> readResourceHistory(String resourceId) {
                 if("isen1".equals(resourceId))
                     // This is the place to put reading history data of sensor.
-                    return new ArrayList<>(Arrays.asList(createObservation(resourceId), createObservation(resourceId), createObservation(resourceId)));
+                    return new ArrayList<>(Arrays.asList(createObservation(resourceId), 
+                            createObservation(resourceId), createObservation(resourceId)));
                 else 
                     throw new RapPluginException(404, "Sensor not found.");
             }
@@ -124,8 +122,8 @@ public class RapPluginExampleApplication implements CommandLineRunner {
         ObservationValue obsval = 
                 new ObservationValue(
                         "7", 
-                        new Property("Temperature", /*"TempIRI",*/ Arrays.asList("Air temperature")), 
-                        new UnitOfMeasurement("C", "degree Celsius", /*"C_IRI",*/ null));
+                        new Property("Temperature", "TempIRI", Arrays.asList("Air temperature")), 
+                        new UnitOfMeasurement("C", "degree Celsius", "C_IRI", null));
         ArrayList<ObservationValue> obsList = new ArrayList<>();
         obsList.add(obsval);
         
