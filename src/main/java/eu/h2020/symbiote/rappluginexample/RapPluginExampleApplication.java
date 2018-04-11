@@ -50,7 +50,7 @@ public class RapPluginExampleApplication implements CommandLineRunner {
             
             @Override
             public List<Observation> readResourceHistory(String resourceId) {
-                if("isen1".equals(resourceId))
+                if("rp_isen1".equals(resourceId))
                     // This is the place to put reading history data of sensor.
                     return new ArrayList<>(Arrays.asList(createObservation(resourceId), 
                             createObservation(resourceId), createObservation(resourceId)));
@@ -60,7 +60,7 @@ public class RapPluginExampleApplication implements CommandLineRunner {
             
             @Override
             public Observation readResource(String resourceId) {
-                if("isen1".equals(resourceId)) {
+                if("rp_isen1".equals(resourceId)) {
                     // This is place to put reading data from sensor 
                     return createObservation(resourceId);
                 }
@@ -80,7 +80,7 @@ public class RapPluginExampleApplication implements CommandLineRunner {
                     }
                 }
                 
-                if("iaid1".equals(resourceId)) {
+                if("rp_iaid1".equals(resourceId)) {
                     // This is place to put actuation code for resource with id
                     System.out.println("iaid1 is actuated");
                     return;
@@ -97,7 +97,7 @@ public class RapPluginExampleApplication implements CommandLineRunner {
                 System.out.println("In invoking service of resource " + resourceId);
                 for(Parameter p: parameters.values())
                     System.out.println(" Parameter - name: " + p.getName() + " value: " + p.getValue());
-                if("isrid1".equals(resourceId)) {
+                if("rp_isrid1".equals(resourceId)) {
                     return "ok";
                 } else {
                     throw new RapPluginException(404, "Service not found.");

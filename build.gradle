@@ -31,9 +31,9 @@ repositories {
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter')
 	// localMaven
-	//compile('eu.h2020.symbiote:ResourceAccessProxyPlugin:0.3.1-SNAPSHOT')
+	//compile('eu.h2020.symbiote:ResourceAccessProxyPlugin:0.1.0-SNAPSHOT')
 	// jitpack
-	compile('com.github.symbiote-h2020:ResourceAccessProxyPlugin:0.3.1')
+	compile('com.github.symbiote-h2020:ResourceAccessProxyPlugin:0.3.3')
 	
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
