@@ -25,6 +25,7 @@ import eu.h2020.symbiote.model.cim.ObservationValue;
 import eu.h2020.symbiote.model.cim.Property;
 import eu.h2020.symbiote.model.cim.UnitOfMeasurement;
 import eu.h2020.symbiote.model.cim.WGS84Location;
+import eu.h2020.symbiote.rapplugin.messaging.rap.ActuatorAccessListener;
 import eu.h2020.symbiote.rapplugin.domain.Capability;
 import eu.h2020.symbiote.rapplugin.domain.Parameter;
 import eu.h2020.symbiote.rapplugin.messaging.rap.ActuatingResourceListener;
@@ -32,6 +33,8 @@ import eu.h2020.symbiote.rapplugin.messaging.rap.InvokingServiceListener;
 import eu.h2020.symbiote.rapplugin.messaging.rap.RapPlugin;
 import eu.h2020.symbiote.rapplugin.messaging.rap.RapPluginException;
 import eu.h2020.symbiote.rapplugin.messaging.rap.ReadingResourceListener;
+import eu.h2020.symbiote.rapplugin.messaging.rap.SimpleResourceAccessListener;
+
 
 @SpringBootApplication
 public class RapPluginExampleApplication implements CommandLineRunner {
@@ -41,16 +44,16 @@ public class RapPluginExampleApplication implements CommandLineRunner {
     RapPlugin rapPlugin;
 
 	public static void main(String[] args) {
+	    WaitForPort.waitForServices(WaitForPort.findProperty("SPRING_BOOT_WAIT_FOR_SERVICES"));
 		SpringApplication.run(RapPluginExampleApplication.class, args);
 	}
 
     @Override
     public void run(String... args) throws Exception {
-        rapPlugin.registerReadingResourceListener(new ReadingResourceListener() {
-            
+        rapPlugin.registerReadingResourceListener(new SimpleResourceAccessListener() {
             @Override
             public List<Observation> readResourceHistory(String resourceId) {
-                if("rp_isen1".equals(resourceId))
+                if("rp_isen1".equals(resourceId) || "isen1".equals(resourceId))
                     // This is the place to put reading history data of sensor.
                     return new ArrayList<>(Arrays.asList(createObservation(resourceId), 
                             createObservation(resourceId), createObservation(resourceId)));
@@ -60,7 +63,9 @@ public class RapPluginExampleApplication implements CommandLineRunner {
             
             @Override
             public Observation readResource(String resourceId) {
-                if("rp_isen1".equals(resourceId)) {
+                LOG.debug("reading resource with id {}", resourceId);
+
+                if("rp_isen1".equals(resourceId) || "isen1".equals(resourceId)) {
                     // This is place to put reading data from sensor 
                     return createObservation(resourceId);
                 }
@@ -80,7 +85,7 @@ public class RapPluginExampleApplication implements CommandLineRunner {
                     }
                 }
                 
-                if("rp_iaid1".equals(resourceId)) {
+                if("rp_iaid1".equals(resourceId) || "iaid1".equals(resourceId)) {
                     // This is place to put actuation code for resource with id
                     System.out.println("iaid1 is actuated");
                     return;
@@ -99,6 +104,8 @@ public class RapPluginExampleApplication implements CommandLineRunner {
                     System.out.println(" Parameter - name: " + p.getName() + " value: " + p.getValue());
                 if("rp_isrid1".equals(resourceId)) {
                     return "ok";
+                } else if ("isrid1".equals(resourceId)) {
+                    return "some json";
                 } else {
                     throw new RapPluginException(404, "Service not found.");
                 }

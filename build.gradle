@@ -18,7 +18,7 @@ apply plugin: 'org.springframework.boot'
 apply plugin: 'maven'
 
 group = 'eu.h2020.symbiote'
-version = '0.0.1-SNAPSHOT'
+version = '0.3.8-SNAPSHOT'
 sourceCompatibility = 1.8
 
 repositories {
@@ -31,9 +31,13 @@ repositories {
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter')
 	// localMaven
-	//compile('eu.h2020.symbiote:ResourceAccessProxyPluginStarter:0.3.7-SNAPSHOT')
+	compile('eu.h2020.symbiote:ResourceAccessProxyPluginStarter:0.4.0-SNAPSHOT')
 	// jitpack
-	compile('com.github.symbiote-h2020:ResourceAccessProxyPluginStarter:0.3.7')
+	//compile('com.github.symbiote-h2020:ResourceAccessProxyPluginStarter:0.3.7')
 	
 	testCompile('org.springframework.boot:spring-boot-starter-test')
+}
+
+jar {
+    version =  project.version
 }
