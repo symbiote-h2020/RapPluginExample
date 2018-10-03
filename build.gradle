@@ -1,6 +1,6 @@
 buildscript {
 	ext {
-		springBootVersion = '1.5.10.RELEASE'
+		springBootVersion = '1.5.14.RELEASE'
 	}
 	repositories {
 		mavenCentral()
@@ -8,7 +8,9 @@ buildscript {
 		maven { url "https://jitpack.io" }
 	}
 	dependencies {
+		classpath "io.spring.gradle:dependency-management-plugin:1.0.0.RELEASE"
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+		classpath group: 'com.cinnober.gradle', name: 'semver-git', version: '2.2.1'
 	}
 }
 
@@ -17,9 +19,13 @@ apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'maven'
 
-group = 'eu.h2020.symbiote'
-version = '0.0.1-SNAPSHOT'
+// publishing
+apply plugin: 'com.cinnober.gradle.semver-git'
+apply plugin: 'maven-publish'
+
+project.group = 'eu.h2020.symbiote'
 sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 repositories {
 	mavenLocal()
@@ -27,6 +33,16 @@ repositories {
 	maven { url "https://jitpack.io" }
 }
 
+/*
+Forces dependencies' cache invalidation for each build for dependencies marked with
+    { changing = true }
+    e.g.
+    compile('com.github.symbiote-h2020:SymbIoTeLibraries:develop-SNAPSHOT'){ changing = true }
+ */
+configurations.all {
+	// check for updates every build
+	resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+}
 
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter')
@@ -37,3 +53,50 @@ dependencies {
 	
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
+
+// publication
+bootRepackage {
+	classifier = 'run'
+}
+
+jar {
+	baseName = 'RapPluginExample'
+	version = project.version
+}
+
+task generateJavaDocs(type: Javadoc) {
+	source = sourceSets.main.allJava
+	classpath = project.sourceSets.main.compileClasspath
+	destinationDir = reporting.file("javadocs")
+}
+
+task javadocJar(type: Jar, dependsOn: generateJavaDocs) {
+	classifier = 'javadoc'
+	from javadoc.destinationDir
+}
+
+task sourceJar(type: Jar) {
+	from sourceSets.main.allJava
+}
+
+publishing {
+	publications {
+		mavenJava(MavenPublication) {
+			groupId = project.group
+			version = project.version
+			from components.java
+
+			artifact sourceJar {
+				classifier "sources"
+			}
+
+			artifact javadocJar
+
+			artifact(file("$libsDir/$project.name-$project.version-${bootRepackage.classifier}.jar")) {
+				classifier "run"
+			}
+		}
+	}
+}
+
+publishToMavenLocal.dependsOn(bootRepackage)
