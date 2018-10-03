@@ -1,23 +1,15 @@
 package eu.h2020.symbiote.rappluginexample;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.TimeZone;
-
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import eu.h2020.symbiote.WaitForPort;
+import eu.h2020.symbiote.model.cim.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import eu.h2020.symbiote.model.cim.Location;
 import eu.h2020.symbiote.model.cim.Observation;
@@ -35,6 +27,12 @@ import eu.h2020.symbiote.rapplugin.messaging.rap.RapPluginException;
 import eu.h2020.symbiote.rapplugin.messaging.rap.ReadingResourceListener;
 import eu.h2020.symbiote.rapplugin.messaging.rap.SimpleResourceAccessListener;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.TimeZone;
 
 @SpringBootApplication
 public class RapPluginExampleApplication implements CommandLineRunner {
@@ -44,8 +42,8 @@ public class RapPluginExampleApplication implements CommandLineRunner {
     RapPlugin rapPlugin;
 
 	public static void main(String[] args) {
-	    WaitForPort.waitForServices(WaitForPort.findProperty("SPRING_BOOT_WAIT_FOR_SERVICES"));
-		SpringApplication.run(RapPluginExampleApplication.class, args);
+        WaitForPort.waitForServices(WaitForPort.findProperty("SPRING_BOOT_WAIT_FOR_SERVICES"));
+        SpringApplication.run(RapPluginExampleApplication.class, args);
 	}
 
     @Override

@@ -1,4 +1,4 @@
-package eu.h2020.symbiote.rappluginexample;
+package eu.h2020.symbiote;
 
 import java.io.IOException;
 import java.net.Socket;
