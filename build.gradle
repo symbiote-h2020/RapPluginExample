@@ -14,10 +14,14 @@ buildscript {
 	}
 }
 
+// code
+apply plugin: "io.spring.dependency-management"
 apply plugin: 'java'
-apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
-apply plugin: 'maven'
+
+// IDEs
+apply plugin: 'eclipse'
+apply plugin: 'idea'
 
 // publishing
 apply plugin: 'com.cinnober.gradle.semver-git'
