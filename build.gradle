@@ -53,7 +53,7 @@ dependencies {
 	// localMaven
 	//compile('eu.h2020.symbiote:ResourceAccessProxyPluginStarter:0.3.7-SNAPSHOT')
 	// jitpack
-	compile('com.github.symbiote-h2020:ResourceAccessProxyPluginStarter:0.3.7')
+	compile('com.github.symbiote-h2020:ResourceAccessProxyPluginStarter:0.3+')
 	
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
