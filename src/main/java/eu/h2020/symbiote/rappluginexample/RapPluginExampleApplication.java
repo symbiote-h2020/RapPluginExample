@@ -1,9 +1,14 @@
 package eu.h2020.symbiote.rappluginexample;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import eu.h2020.symbiote.WaitForPort;
-import eu.h2020.symbiote.model.cim.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.TimeZone;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,13 +16,16 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import eu.h2020.symbiote.WaitForPort;
 import eu.h2020.symbiote.model.cim.Location;
 import eu.h2020.symbiote.model.cim.Observation;
 import eu.h2020.symbiote.model.cim.ObservationValue;
 import eu.h2020.symbiote.model.cim.Property;
 import eu.h2020.symbiote.model.cim.UnitOfMeasurement;
 import eu.h2020.symbiote.model.cim.WGS84Location;
-import eu.h2020.symbiote.rapplugin.messaging.rap.ActuatorAccessListener;
 import eu.h2020.symbiote.rapplugin.domain.Capability;
 import eu.h2020.symbiote.rapplugin.domain.Parameter;
 import eu.h2020.symbiote.rapplugin.messaging.rap.ActuatingResourceListener;
@@ -25,14 +33,6 @@ import eu.h2020.symbiote.rapplugin.messaging.rap.InvokingServiceListener;
 import eu.h2020.symbiote.rapplugin.messaging.rap.RapPlugin;
 import eu.h2020.symbiote.rapplugin.messaging.rap.RapPluginException;
 import eu.h2020.symbiote.rapplugin.messaging.rap.ReadingResourceListener;
-import eu.h2020.symbiote.rapplugin.messaging.rap.SimpleResourceAccessListener;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.TimeZone;
 
 @SpringBootApplication
 public class RapPluginExampleApplication implements CommandLineRunner {
@@ -48,7 +48,7 @@ public class RapPluginExampleApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        rapPlugin.registerReadingResourceListener(new SimpleResourceAccessListener() {
+        rapPlugin.registerReadingResourceListener(new ReadingResourceListener() {
             @Override
             public List<Observation> readResourceHistory(String resourceId) {
                 if("rp_isen1".equals(resourceId) || "isen1".equals(resourceId))
