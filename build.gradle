@@ -52,10 +52,10 @@ configurations.all {
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter')
 	// localMaven
-	//compile('eu.h2020.symbiote:ResourceAccessProxyPluginStarter:0.4.0-SNAPSHOT')
+	compile('eu.h2020.symbiote:ResourceAccessProxyPluginStarter:0.5.0-SNAPSHOT')
 	// jitpack
 	//compile('com.github.symbiote-h2020:ResourceAccessProxyPluginStarter:0.3+')
-	compile('com.github.symbiote-h2020:ResourceAccessProxyPluginStarter:0.4+')
+	//compile('com.github.symbiote-h2020:ResourceAccessProxyPluginStarter:0.4+')
 	
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }

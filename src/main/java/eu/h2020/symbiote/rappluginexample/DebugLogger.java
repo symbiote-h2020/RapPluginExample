@@ -19,8 +19,8 @@ import org.springframework.core.env.MutablePropertySources;
 import org.springframework.core.env.PropertiesPropertySource;
 import org.springframework.core.env.PropertySource;
 
-import eu.h2020.symbiote.rapplugin.properties.RabbitConnectionProperties;
-import eu.h2020.symbiote.rapplugin.properties.RapProperties;
+import eu.h2020.symbiote.rapplugin.properties.RabbitProperties;
+import eu.h2020.symbiote.rapplugin.properties.RapPluginProperties;
 
 @Configuration
 public class DebugLogger {
@@ -30,7 +30,7 @@ public class DebugLogger {
 	private AbstractEnvironment environment;
 	
 	@Bean
-	public CommandLineRunner commandLineRunner(ApplicationContext ctx, AbstractEnvironment environment, RabbitConnectionProperties rabbit, RapProperties rap) {
+	public CommandLineRunner commandLineRunner(ApplicationContext ctx, AbstractEnvironment environment, RabbitProperties rabbit, RapPluginProperties rap) {
 		return args -> {
 			printProperties();
 			printBeans(ctx);
@@ -38,7 +38,7 @@ public class DebugLogger {
 		};
 	}
 
-	private void printConfigurations(RabbitConnectionProperties rabbit, RapProperties rap) {
+	private void printConfigurations(RabbitProperties rabbit, RapPluginProperties rap) {
         log.debug("**** RabbitConnectionProperties ****");
         
         log.debug("Host: " + rabbit.getHost());
