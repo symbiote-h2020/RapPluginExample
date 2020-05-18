@@ -180,7 +180,6 @@ public class RapPluginExampleApplication implements CommandLineRunner {
 
       private void sendPush() {
         LOG.info("Sending notifications!!!!");
-        ObjectMapper mapper = new ObjectMapper();
         synchronized (subscriptionSet) {
           for (String id : subscriptionSet) {
             Observation observation = createObservation(id);
