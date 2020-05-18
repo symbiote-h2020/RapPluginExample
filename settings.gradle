@@ -1,2 +1,4 @@
 rootProject.name="RapPluginExample"
 
+//include 'ResourceAccessProxyPluginStarter'
+//project(':ResourceAccessProxyPluginStarter').projectDir = file('../ResourceAccessProxyPluginStarter')
