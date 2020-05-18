@@ -3,7 +3,7 @@ FROM openjdk:8-jre-alpine
 WORKDIR /home
 
 ENV componentName "RapPluginExample"
-ENV componentVersion 1.4.1
+ENV componentVersion 2.0.0
 
 RUN apk --no-cache add \
 	git \
